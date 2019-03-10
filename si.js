@@ -4,9 +4,10 @@ var flowerlist=[],bulletlist=[],shieldlist=[];
 var rightPressed=false;
 var leftPressed=false;
 var enterPressed=false;
+var mouseclk=false;
 var decider=0;
 var mySound,img;
-
+var movel=false,mover=false;
 
 
 
@@ -24,12 +25,16 @@ function preload()
 
 function setup()
 	{
+		textSize(80);
 		createCanvas(1500,700);
 		shieldpositions=[width*.15,width*.35,width*.55,width*.75];
   		mySound.setVolume(0.4);
   		mySound.play();
   		img=loadImage("images/alien1.jpg");
   		img2=loadImage("images/spaceship.png");
+  		img3=loadImage("images/uparrow.png");
+  		imgl=loadImage("images/leftarrow.png");
+  		imgr=loadImage("images/rightarrow.png");
   		//image(img,50,25);
 		ship1=new ship();
 
@@ -61,18 +66,43 @@ function setup()
 
 	}
 
+function mousePressed()
+	{
+		if ((mouseX>=width-100) && (mouseY>=height/2)&&(mouseX<=width-60)&&(mouseY<=height/2+40))
+		mouseclk=true;
+
+		if ((mouseX>=width-140) && (mouseY>=height/2+40)&&(mouseX<=width-100)&&(mouseY<=height/2+80))
+			movel=true;
+		if ((mouseX>=width-60) && (mouseY>=height/2+40)&&(mouseX<=width-20)&&(mouseY<=height/2+80))
+			mover=true;
+	}
+function mouseReleased()
+	{
+		mouseclk=false;
+		movel=false;
+		mover=false;
+
+	}
 
 function draw()
 	{
+		
+		//fill(255);
+		//text("hello",100,100);
+		
+		
 		background(0,0,0);
 		//image(img,0,0);
+		image(img3,width-100,height/2,40,40);
+		image(imgl,width-140,height/2+40,40,40);
+		image(imgr,width-60,height/2+40,40,40);
 		if(ship1.onScreen)
 		{
-		if(rightPressed) ship1.right();
-		if(leftPressed) ship1.left();
+		if(mover) ship1.right();
+		if(movel) ship1.left();
 		ship1.show();
 	    }
-		if(enterPressed)
+		if(mouseclk)
 			{   //p2c('hello');
 				//console.log('new bullet pushed at '+ship1.x+','+ship1.y);
 				
